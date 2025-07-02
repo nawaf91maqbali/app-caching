@@ -1,5 +1,6 @@
 ﻿using AppCaching.Services;
 using Microsoft.AspNetCore.Mvc;
+using System.Diagnostics;
 
 namespace AppCaching.Controllers
 {
@@ -24,7 +25,16 @@ namespace AppCaching.Controllers
         {
             try
             {
+                //Setup a stopwatch to measure the elapsed time for the operation
+                var stopwatch = Stopwatch.StartNew();
+
+                //Retrieve all users using the UserService
                 var users = await _userService.GetAllUsersAsync();
+
+                // Stop the stopwatch to measure the elapsed time
+                stopwatch.Stop();
+                // Log the elapsed time for performance monitoring
+                Console.WriteLine($"Elapsed Time: {stopwatch.Elapsed.TotalMilliseconds} ms");
                 return Ok(users);
             }
             catch (Exception ex)

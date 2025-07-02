@@ -6,6 +6,8 @@ namespace AppCaching.Data
     {
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
         {
+            // Ensure the database is created
+            Database.EnsureCreated();
         }
         public DbSet<Models.User> Users { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)

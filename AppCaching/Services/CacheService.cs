@@ -30,7 +30,10 @@ namespace AppCaching.Services
             _memoryCache = memoryCache;
             _redisCache = redisCache;
             _config = config;
-            _cacheType = _config["CacheSettings:CacheType"] == "InMemory" ? CacheType.InMemory : CacheType.Redis;
+
+            //Determine cache type based on configuration settings
+            //Default to InMemory if not specified
+            _cacheType = _config["CacheSettings:CacheType"] == "Redis" ? CacheType.Redis : CacheType.InMemory;
             _defaultExpiration = TimeSpan.FromMinutes(5); // Default expiration time
             if (int.TryParse(_config["CacheSettings:ExpirationTime"], out int minutes))
                 _defaultExpiration = TimeSpan.FromMinutes(minutes);
